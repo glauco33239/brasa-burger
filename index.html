@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brasa Burger | Hambúrgueres Artesanais</title>
+  <meta name="description" content="Conheça o cardápio da Brasa Burger. Hambúrgueres artesanais, combos, acompanhamentos e bebidas. Faça seu pedido pelo WhatsApp.">
+  <meta name="theme-color" content="#FAF8F5">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Brasa Burger">
+  <meta property="og:title" content="Brasa Burger | Hambúrgueres Artesanais">
+  <meta property="og:description" content="Conheça o cardápio da Brasa Burger. Hambúrgueres artesanais, combos, acompanhamentos e bebidas. Faça seu pedido pelo WhatsApp.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=1200&q=75">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== A. HEADER ===== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a class="logo" href="#topo" aria-label="Brasa Burger — voltar ao topo">
+        <span class="logo__mark" data-icon="flame" data-size="20"></span>
+        <span class="logo__text" data-store-name>Brasa Burger</span>
+      </a>
+
+      <span class="status" id="storeStatus" role="status">
+        <span class="status__dot" aria-hidden="true"></span>
+        <span id="storeStatusText">Aberto agora</span>
+      </span>
+
+      <button class="cart-btn" id="cartButton" type="button" aria-label="Abrir carrinho">
+        <span data-icon="bag" data-size="22"></span>
+        <span class="cart-btn__count" id="cartCount" aria-hidden="true">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="topo">
+
+    <!-- ===== B. HERO ===== -->
+    <section class="hero container" aria-labelledby="heroTitle">
+      <div class="hero__content">
+        <h1 id="heroTitle">Seu próximo hambúrguer favorito.</h1>
+        <p class="hero__subtitle">Feito na brasa, com ingredientes selecionados e muito sabor.</p>
+        <a class="btn btn--primary btn--lg" href="#cardapio">Ver cardápio</a>
+      </div>
+      <div class="hero__media">
+        <img id="heroImage" alt="Hambúrguer artesanal da Brasa Burger" width="900" height="720" fetchpriority="high">
+        <span class="hero__badge"><span data-icon="flame" data-size="16"></span> 100% artesanal</span>
+      </div>
+    </section>
+
+    <!-- ===== C. INFORMAÇÕES DA LOJA ===== -->
+    <section class="container info" aria-label="Informações da loja">
+      <ul class="info__grid" id="infoGrid"></ul>
+    </section>
+
+    <!-- ===== D/E/F. CARDÁPIO ===== -->
+    <section class="container menu" id="cardapio" aria-labelledby="menuTitle">
+      <div class="section-head">
+        <h2 id="menuTitle">Cardápio</h2>
+        <p class="section-head__count" id="resultsCount" aria-live="polite"></p>
+      </div>
+
+      <div class="toolbar" id="toolbar">
+        <div class="search">
+          <span class="search__icon" data-icon="search" data-size="20"></span>
+          <input class="search__input" id="searchInput" type="search" placeholder="Buscar no cardápio..." aria-label="Buscar no cardápio" autocomplete="off" enterkeyhint="search">
+          <button class="search__clear" id="clearSearch" type="button" aria-label="Limpar busca" hidden>
+            <span data-icon="x" data-size="18"></span>
+          </button>
+        </div>
+        <nav class="categories" id="categories" aria-label="Categorias do cardápio"></nav>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+
+      <div class="empty" id="emptyState" hidden>
+        <div class="empty__icon" data-icon="search" data-size="30"></div>
+        <h3>Nenhum produto encontrado</h3>
+        <p id="emptyMessage">Tente buscar por outro nome ou ingrediente.</p>
+        <button class="btn btn--secondary" id="emptyClear" type="button">Limpar busca</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div>
+        <strong class="footer__brand"><span data-icon="flame" data-size="18"></span> <span data-store-name>Brasa Burger</span></strong>
+        <p id="footerAddress"></p>
+      </div>
+      <a class="footer__link" id="footerWhatsapp" href="#" target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
+    </div>
+    <p class="container footer__note">Projeto fictício de demonstração · MenuZap</p>
+  </footer>
+
+  <!-- ===== Camada escura (carrinho / modais) ===== -->
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- ===== CARRINHO (drawer) ===== -->
+  <aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true" inert>
+    <div class="drawer__header">
+      <h2 id="cartTitle">Seu pedido <span class="muted" id="cartTitleCount"></span></h2>
+      <button class="icon-btn" id="cartClose" type="button" data-close aria-label="Fechar carrinho">
+        <span data-icon="x" data-size="20"></span>
+      </button>
+    </div>
+
+    <div class="drawer__body">
+      <div class="cart-empty" id="cartEmpty" hidden>
+        <div class="cart-empty__icon" data-icon="bag" data-size="40"></div>
+        <h3>Seu carrinho está vazio.</h3>
+        <p>Que tal experimentar algo delicioso?</p>
+        <button class="btn btn--primary" type="button" data-close>Ver cardápio</button>
+      </div>
+      <ul class="cart-list" id="cartList"></ul>
+    </div>
+
+    <div class="drawer__footer" id="cartFooter">
+      <div class="field">
+        <label for="generalNote">Observações gerais</label>
+        <textarea id="generalNote" rows="2" maxlength="300" placeholder="Ex.: Tocar a campainha, enviar guardanapos extras..."></textarea>
+      </div>
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <strong id="cartSubtotal">R$ 0,00</strong>
+      </div>
+      <p class="hint" id="cartFeeHint"></p>
+      <div class="drawer__actions">
+        <button class="btn btn--secondary" type="button" data-close>Continuar comprando</button>
+        <button class="btn btn--primary" id="checkoutButton" type="button">Finalizar pedido</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== MODAL DE PRODUTO ===== -->
+  <div class="modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle" aria-hidden="true" inert>
+    <button class="icon-btn modal__close modal__close--float" type="button" data-close aria-label="Fechar detalhes">
+      <span data-icon="x" data-size="20"></span>
+    </button>
+    <div class="modal__scroll" id="productContent"></div>
+    <div class="modal__footer" id="productFooter"></div>
+  </div>
+
+  <!-- ===== MODAL DE FINALIZAÇÃO ===== -->
+  <div class="modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" aria-hidden="true" inert>
+    <form class="modal__form" id="checkoutForm" novalidate>
+      <div class="modal__header">
+        <h2 id="checkoutTitle">Finalizar pedido</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Fechar">
+          <span data-icon="x" data-size="20"></span>
+        </button>
+      </div>
+
+      <div class="modal__scroll modal__scroll--pad">
+        <div class="field">
+          <label for="customerName">Seu nome <span class="muted">(opcional)</span></label>
+          <input id="customerName" name="customerName" type="text" autocomplete="name" maxlength="60" placeholder="Como podemos te chamar?">
+        </div>
+
+        <fieldset class="field">
+          <legend>Como você prefere receber?</legend>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="mode" value="delivery" checked>
+              <span class="option__box">
+                <span data-icon="truck" data-size="22"></span>
+                <strong>Entrega</strong>
+                <small>Receba em casa</small>
+              </span>
+            </label>
+            <label class="option">
+              <input type="radio" name="mode" value="pickup">
+              <span class="option__box">
+                <span data-icon="bag" data-size="22"></span>
+                <strong>Retirada</strong>
+                <small>no estabelecimento</small>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="address" id="addressFields">
+          <div class="field">
+            <label for="street">Endereço</label>
+            <input id="street" name="street" type="text" autocomplete="address-line1" maxlength="100" placeholder="Rua, avenida..." aria-describedby="err-street">
+            <small class="field__error" id="err-street" hidden></small>
+          </div>
+          <div class="field-row">
+            <div class="field field--sm">
+              <label for="number">Número</label>
+              <input id="number" name="number" type="text" autocomplete="off" maxlength="10" aria-describedby="err-number">
+              <small class="field__error" id="err-number" hidden></small>
+            </div>
+            <div class="field">
+              <label for="district">Bairro</label>
+              <input id="district" name="district" type="text" autocomplete="address-level3" maxlength="60" aria-describedby="err-district">
+              <small class="field__error" id="err-district" hidden></small>
+            </div>
+          </div>
+          <div class="field">
+            <label for="complement">Complemento <span class="muted">(opcional)</span></label>
+            <input id="complement" name="complement" type="text" maxlength="60" placeholder="Apto, bloco, referência...">
+          </div>
+        </div>
+      </div>
+
+      <div class="modal__footer">
+        <dl class="summary" id="checkoutSummary"></dl>
+        <button class="btn btn--primary btn--block btn--lg" type="submit">
+          <span data-icon="send" data-size="18"></span> Enviar pedido pelo WhatsApp
+        </button>
+        <button class="btn btn--ghost btn--block" type="button" data-action="back-to-cart">Voltar ao carrinho</button>
+        <p class="hint hint--center">Você confirma o envio dentro do WhatsApp. Nenhum pagamento é feito aqui.</p>
+      </div>
+    </form>
+  </div>
+
+  <!-- Barra do carrinho (mobile) -->
+  <button class="cart-bar" id="cartBar" type="button" aria-label="Ver pedido" inert>
+    <span class="cart-bar__left"><span class="cart-bar__count" id="cartBarCount">0</span> Ver pedido</span>
+    <strong id="cartBarTotal">R$ 0,00</strong>
+  </button>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
