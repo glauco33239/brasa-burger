@@ -1,4 +1,4 @@
-/**
+ml/**
  * Brasa Burger — configurações gerais
  * Edite este arquivo para personalizar o menu para outro estabelecimento.
  */
@@ -7,7 +7,7 @@ const APP_CONFIG = {
   store: {
     name: 'Brasa Burger',
     // Somente números, com DDI + DDD (ex.: 5522999999999). Número fictício de desenvolvimento.
-    whatsapp: '5522997191147',
+    whatsapp: '5522999999999',
     address: 'Rua das Palmeiras, 120 — Centro',
     hoursLabel: 'Terça a domingo, 18h às 23h',
     prepTime: '30–45 min',
