@@ -1,4 +1,4 @@
-ml/**
+/**
  * Brasa Burger — configurações gerais
  * Edite este arquivo para personalizar o menu para outro estabelecimento.
  */
